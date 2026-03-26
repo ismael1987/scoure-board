@@ -1,1 +1,1 @@
-# scoure-board
+# score-board
