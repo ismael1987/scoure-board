@@ -46,4 +46,9 @@ public class ScoreboardServiceImpl implements IScoreboardService {
             throw new IllegalArgumentException(MATCH_NOT_FOUND);
         }
     }
+
+    @Override
+    public void finishMatch(Match match) throws IllegalArgumentException{
+
+    }
 }
