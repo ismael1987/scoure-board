@@ -76,4 +76,34 @@ public class ScoreboardServiceTest {
         assertEquals(m5, summary.get(3)); // Argentina 3-1 Australia
         assertEquals(m3, summary.get(4)); // Germany 2-2 France
     }
+
+    @Test
+    void testFinishMatch() {
+        Match m1 = scoreboard.startMatch(Team.MEXICO, Team.CANADA);
+        Match m2 = scoreboard.startMatch(Team.SPAIN, Team.BRAZIL);
+
+        scoreboard.updateScore(m1, 0, 5);  // total 5
+        scoreboard.updateScore(m2, 10, 2); // total 12
+
+        List<Match> summary = scoreboard.getSummary();
+
+        scoreboard.finishMatch(m2); // Finish Spain vs Brazil
+        summary = scoreboard.getSummary();
+        assertEquals(m1, summary.get(0)); // Mexico 0-5 Canada
+    }
+
+    @Test
+    void testFinishMatchthatIsNotFound() {
+        Match match = new Match(Team.MEXICO, Team.CANADA);
+
+        List<Match> summary = scoreboard.getSummary();
+        assertTrue(summary.isEmpty());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                scoreboard.finishMatch(match)
+        );
+
+        assertEquals("Match not found on scoreboard", exception.getMessage());
+
+    }
 }
